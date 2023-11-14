@@ -1,0 +1,10 @@
+@media(min-width: 600px){
+footer{
+    display: flex;
+    flex-direction: row;
+    width: 95vvw;
+    justify-content: center;
+}
+
+img{border: 5px solid rgb(37, 129, 129);}
+}
