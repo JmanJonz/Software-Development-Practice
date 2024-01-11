@@ -1,10 +1,21 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import TodoForm from "./TodoForm";
+import TodoList from "./TodoList";
 
 let App = ()=>{
   // component state setup
     const [newItem, setNewItem] = useState("")
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = useState(()=>{
+      const localValues = localStorage.getItem("ITEMS");
+      if (localValues == null){
+        return []
+      }
+      return JSON.parse(localValues);
+    });
+
+useEffect(()=>{
+  localStorage.setItem("ITEMS", JSON.stringify(todos))
+}, [todos])
 
 function AddListItem(title){
   setTodos((prevTodos)=>{
@@ -29,24 +40,12 @@ const deleteTodo = (id)=>{
     return currentTodos.filter(todo => todo.id !== id)
    })
 }
+
 return (
 <>
 <TodoForm onSubmit={AddListItem}/>
 <h1 className="header">Todo List</h1>
-<ul className="list">
-  {todos.length === 0 && "No Todos"}
-  {todos.map((todo)=>{
-    return (
-      <li key={todo.id}>
-        <label>
-          <input type="checkbox" checked={todo.completed} onChange={(e)=>toggleTodo(todo.id, e.target.checked)}/>
-          {todo.title}
-          <button className="btn btn-danger" onClick={()=>{deleteTodo(todo.id)}}>Delete</button>
-        </label>
-      </li>
-    )
-  })}
-</ul>
+<TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>
 </>
 )
 }
