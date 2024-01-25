@@ -1,21 +1,64 @@
 const socket = io("ws://localhost:4321");
 
+const msgInput = document.querySelector("#message");
+const nameInput = document.querySelector("#name");
+const chatRoom = document.querySelector("#room");
+const activity = document.querySelector(".activity");
+const userList = document.querySelector(".user-list");
+const roomList = document.querySelector(".room-list");
+const chatDisplay = document.querySelector(".chat-display");
+const messageForm = document.querySelector(".form-message");
+
+
+
 function sendMessage(e){
     e.preventDefault();
-    const input = document.querySelector("input");
-    if(input.value){
-        socket.emit("message", input.value);
-        input.value = "";
+    if(nameInput.value && chatRoom.value && msgInput.value){
+        socket.emit("message", {
+            name: nameInput.value,
+            text: msgInput.value
+        });
+        msgInput.value = "";
     }
-    input.focus();
+    msgInput.focus();
 }
 
-document.querySelector("form")
+function enterRoom(e){
+    e.preventDefault()
+    if(nameInput.value && chatRoom.value){
+        socket.emit("enterRoom", {
+            name: nameInput.value,
+            room: chatRoom.value
+        })
+    }
+}
+
+messageForm
     .addEventListener("submit", sendMessage); 
+document.querySelector('form-join')
+    .addEventListener("submit", enterRoom); 
+
+msgInput.addEventListener("keypress", ()=>{
+    socket.emit("activity", nameInput.value);
+})
 
 // listent to messages 
     socket.on("message", (data)=>{
+        activity.textContent = "";
         const li = document.createElement("li")
         li.textContent = data;
         document.querySelector("ul").appendChild(li);
+    })
+
+
+// listen for keypress activity
+let activityTimer;
+    socket.on("activity", (name)=>{
+        activity.textContent = `${name} is typing...`
+
+        // clear after 3 seconds
+        clearTimeout(activityTimer);
+        activityTimer = setTimeout(() => {
+            activity.textContent = "";
+        }, 3000);
     })
