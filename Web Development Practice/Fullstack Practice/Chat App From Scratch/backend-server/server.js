@@ -23,7 +23,7 @@ import {Server} from 'socket.io';
 // serve frontend
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    expressApp.use(express.static(path.join(__dirname, 'frontend-server')))
+    expressApp.use(express.static(path.join(__dirname, 'frontend-server/dist')))
 
 // setting up socket.io websocket configurations and starting listening
     const io = new Server(expressServer, {
