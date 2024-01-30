@@ -1,26 +1,19 @@
 import styles from './message.module.css';
 
-const input = document.querySelector('input');
-const button = document.querySelector('button');
-const form = document.querySelector('form');
-
-// // send message button is clicked
-//     form.addEventListener("submit", (e)=>{
-//         e.preventDefault();
-//         input.value = '';
-//     })
-
 export default function Message(){
+    function formSubmit(e){
+        e.preventDefault();
+    }
     return(
         <>
         <main className={styles.main}>
-            <form>
+            <form onSubmit={formSubmit} className='formMSG'>
                 <label>
                     <input className={`${styles.input} ${styles.inputOnly}`} placeholder='Type Your Message Here' type="text" />
                 </label>
-                <button className={`${styles.input} ${styles.button}`} type='submit'>Send</button>
+                <button className={` sendMessage ${styles.input} ${styles.button}`} type='submit'>Send</button>
             </form>
-            <form>
+            <form onSubmit={formSubmit} className='formRoom'>
                 <label>
                     <input className={`${styles.input} ${styles.inputOnly}`} placeholder='Type Your ChatRoom Here' type="text" />
                 </label>
