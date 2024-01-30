@@ -40,38 +40,91 @@ const io = new Server(expressServer, {
         console.log(`User ${socket.id.substring(0,5)} connected`)
         console.log("Connection Made");
 
+        // upon entering a room
+            socket.on("enterRoom", ({name, room})=>{
+                // leave a previous room if user was in a previous room
+                    const prevRoom = getUser(socket.id)?.room
+
+                    if(prevRoom){
+                        socket.leave(prevRoom)
+                        io.to(prevRoom).emit('message', buildMsg(ADMIN, `${name} has left the room`))
+                    }
+
+                    const user = activateUser(socket.id, name, room)
+
+                    // cannot update previous room users list until after the state update in activate user
+                        if(prevRoom){
+                            io.to(prevRoom).emit('userList', {
+                                users: getUsersInRoom(prevRoom)
+                            })
+                        }
+
+                    // join new room
+                        socket.join(user.room)
+
+                    // to user who joined
+                        socket.emit("message", buildMsg(ADMIN, `You have joined the ${user.room} chat room`))
+
+                    // to everyone else
+                        socket.broadcast.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has joined the room`))
+
+                    // update userlist for room
+                        io.to(user.room).emit('userList', {
+                            users: getUsersInRoom(user.room)
+                        })
+
+                    // update the active roomslist for everyone
+                        io.emit('roomsList', {
+                            rooms: getAllActiveRooms()
+                        })
+            })
+
+            // when user disconnects - to all others
+            socket.on("disconnect", ()=>{
+                const user = getUser(socket.id)
+                userLeavesApp(socket.id)
+
+                if(user){
+                    io.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has left the room`))
+                    io.to(user.room).emit('userList', {
+                        users: getUsersInRoom(user.room)
+                    })
+                    io.emit('roomList', {
+                        rooms: getAllActiveRooms()
+                    })
+                }
+
+                console.log(`User ${socket.id} disconnected`)
+            })
+
         // upon connection - only to user that connected
-            socket.emit("message", "Welcome to Chat App!");
+            socket.emit("message", buildMsg(ADMIN, "Welcome To Chat App!"));
 
         // upon connection to everyone but the person that connected
             socket.broadcast.emit("message", `User ${socket.id.substring(0,5)} connected`)
 
         // Listen for a message event
-            socket.on("message", data => {
-                console.log(data);
-                io.emit("message",`UserId: ${socket.id.substring(0,5)} - ${data}`);
-            })
-
-        // when user disconnects - to all others
-            socket.on("disconnect", ()=>{
-                socket.broadcast.emit("message", `User ${socket.id.substring(0,5)} disconnected`)
+            socket.on("message", ({name, text}) => {
+                const room = getUser(socket.id)?.room
+                if (room){
+                    io.to(room).emit('message', buildMsg(name, text))
+                }
             })
 
         // listen for activity
             socket.on("activity", (name)=>{
-                socket.broadcast.emit('activity', name)
+                const room = getUser(socket.id)?.room
+                if(room){
+                    socket.broadcast.to(room).emit('activity', name)
+                }
             })
     })
 
     function buildMsg(name, text){
         return {
             name,
-            next,
-            time: new Intl.DateTimeFormat('default', {
-                hour: 'numeric',
-                minute: 'numberic',
-                second: 'numeric'
-            }).format(new Date())
+            text,
+            time: "Not Right Now"
         }
     }
 
@@ -85,8 +138,8 @@ const io = new Server(expressServer, {
     // when user leaves itd sets user state to be all that was ther
     // but filtered so that the id that left is no longer there
         function userLeavesApp(id){
-            UsersState.setUsers(
-                usersState.users.filter(user => user.id !== id)
+            UserState.setUsers(
+                UserState.users.filter(user => user.id !== id)
             )
         }
 
