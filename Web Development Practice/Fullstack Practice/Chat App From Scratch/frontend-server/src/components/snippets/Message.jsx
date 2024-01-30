@@ -4,11 +4,11 @@ const input = document.querySelector('input');
 const button = document.querySelector('button');
 const form = document.querySelector('form');
 
-// send message button is clicked
-    form.addEventListener("submit", (e)=>{
-        e.preventDefault();
-        input.value = '';
-    })
+// // send message button is clicked
+//     form.addEventListener("submit", (e)=>{
+//         e.preventDefault();
+//         input.value = '';
+//     })
 
 export default function Message(){
     return(
