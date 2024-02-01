@@ -34,5 +34,15 @@ import {Server} from 'socket.io';
 
     // listen for websocket connection and keep everything websocket inside 
     // here so it only works if there is a connection
+        io.on('connection', socket => {
+            console.log(socket.id)
+        })
+
+        io.on('newMessage', ()=>{
+            console.log('new message')
+        })
+
+    
+
 
 

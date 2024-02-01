@@ -9,7 +9,6 @@ export default function ChatApp(){
 
     function updateChatList(message){
         setChatList(currentChatList => [...currentChatList, message])
-        console.log(chatList)
     }
 
     return(
