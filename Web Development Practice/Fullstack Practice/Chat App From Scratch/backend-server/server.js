@@ -34,13 +34,20 @@ import {Server} from 'socket.io';
 
     // listen for websocket connection and keep everything websocket inside 
     // here so it only works if there is a connection
+    // *** socket is for each socket connection
+    // ****** io is for all connected sockets
         io.on('connection', socket => {
             console.log(socket.id)
+        // looks like all socket listeners need to be inside initial listener
+        // connection...
+        // Anddddd you need to use socket not io after!
+        // this is message coming in to be sent out by server
+            socket.on('clientToServer', (message)=>{
+                console.log(`Message from ${socket.id}: ${message.message}`)
+                io.emit('serverToClient', `Message from ${socket.id}: ${message.message}`)
+            })
         })
 
-        io.on('newMessage', ()=>{
-            console.log('new message')
-        })
 
     
 
