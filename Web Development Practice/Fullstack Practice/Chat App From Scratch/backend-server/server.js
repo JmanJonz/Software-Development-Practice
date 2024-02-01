@@ -28,7 +28,11 @@ import {Server} from 'socket.io';
 // setting up socket.io websocket configurations and starting listening
     const io = new Server(expressServer, {
         cors: {
-            origin: ["http://localhost:4321", "http://127.0.0.1:4321"]
+            // you shouldn't do this but I wanted to connect from my phone 
+            // and my laptops ip address isn't the same as localhost even though in 
+            // some ways it's the same thing
+            // '*' allows to connect from anywhere on the network
+                origin: '*'
         }
     })
 
@@ -42,9 +46,8 @@ import {Server} from 'socket.io';
         // connection...
         // Anddddd you need to use socket not io after!
         // this is message coming in to be sent out by server
-            socket.on('clientToServer', (message)=>{
-                console.log(`Message from ${socket.id}: ${message.message}`)
-                socket.broadcast.emit('serverToClient', `Message from ${socket.id}: ${message.message}`)
+            socket.on('clientToServer', ({message})=>{
+                socket.broadcast.emit('serverToClient', `Message from ${socket.id}: ${message}`)
             })
         })
 

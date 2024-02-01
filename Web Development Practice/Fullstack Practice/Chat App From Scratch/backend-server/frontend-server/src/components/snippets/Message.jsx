@@ -29,23 +29,28 @@ export default function Message({updateChatListt}){
         e.preventDefault();
         const formData = new FormData(e.target);
         const message = formData.get('message');
+        const room = formData.get('room');
         updateChatListt({'message': `You Sent: ${message}`});
-        socketRef.current.emit('clientToServer', {message})
+        socketRef.current.emit('clientToServer', {message: message, room: room})    
     }
+
+
     return(
         <>
         <main className={styles.main}>
             <form onSubmit={formSubmit} className='formMSG'>
+                <div>
                 <label>
                     <input name='message' className={`${styles.input} ${styles.inputOnly}`} placeholder='Type Your Message Here' type="text" />
                 </label>
                 <button className={` sendMessage ${styles.input} ${styles.button}`} type='submit'>Send</button>
-            </form>
-            <form onSubmit={formSubmit} className='formRoom'>
+                </div>
+                <div>
                 <label>
-                    <input className={`${styles.input} ${styles.inputOnly}`} placeholder='Type Your ChatRoom Here' type="text" />
+                    <input name='room' className={`${styles.input} ${styles.inputOnly}`} placeholder='Type Your ChatRoom Here' type="text" />
                 </label>
                 <button className={`${styles.input} ${styles.button}`} type='submit'>Enter</button>
+                </div>
             </form>
         </main>
         </>
