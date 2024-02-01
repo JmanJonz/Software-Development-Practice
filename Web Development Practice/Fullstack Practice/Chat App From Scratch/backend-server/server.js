@@ -46,8 +46,12 @@ import {Server} from 'socket.io';
         // connection...
         // Anddddd you need to use socket not io after!
         // this is message coming in to be sent out by server
-            socket.on('clientToServer', ({message})=>{
-                socket.broadcast.emit('serverToClient', `Message from ${socket.id}: ${message}`)
+            socket.on('clientToServer', ({message, room})=>{
+                if(room !== ''){
+                    socket.to(room).emit('serverToClient', `Message from ${socket.id}: ${message}`)
+                }else{
+                    socket.broadcast.emit('serverToClient', `Message from ${socket.id}: ${message}`)
+                }
             })
         })
 
