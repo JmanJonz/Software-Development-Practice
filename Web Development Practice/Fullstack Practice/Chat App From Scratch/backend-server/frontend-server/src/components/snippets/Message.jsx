@@ -29,6 +29,7 @@ export default function Message({updateChatListt}){
         e.preventDefault();
         const formData = new FormData(e.target);
         const message = formData.get('message');
+        updateChatListt({'message': `You Sent: ${message}`});
         socketRef.current.emit('clientToServer', {message})
     }
     return(

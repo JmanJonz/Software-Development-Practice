@@ -44,7 +44,7 @@ import {Server} from 'socket.io';
         // this is message coming in to be sent out by server
             socket.on('clientToServer', (message)=>{
                 console.log(`Message from ${socket.id}: ${message.message}`)
-                io.emit('serverToClient', `Message from ${socket.id}: ${message.message}`)
+                socket.broadcast.emit('serverToClient', `Message from ${socket.id}: ${message.message}`)
             })
         })
 
