@@ -9,7 +9,8 @@ import {Server} from 'socket.io';
 // used to create a path for serving frontend from express
     import path from 'path';
     import { fileURLToPath } from "url";
-
+// import mock database
+    import mockDB from './mockDB.js';
 
 // setting up express http server and socket.io on same address, port.
 // listening for requests at the same door like two people waiting for someone
@@ -46,11 +47,16 @@ import {Server} from 'socket.io';
         // connection...
         // Anddddd you need to use socket not io after!
         // this is message coming in to be sent out by server
-            socket.on('clientToServer', ({message, room})=>{
-                if(room !== ''){
-                    socket.to(room).emit('serverToClient', `Message from ${socket.id}: ${message}`)
+            socket.on('clientToServer', ({id, message, room})=>{
+                if(room !== '' && id !== ''){
+                    if(mockDB.userCanEnterRoom(id, room)){
+                        socket.join(room);
+                        socket.to(room).emit('serverToClient', `Message from ${socket.id}: ${message}`)
+                    }else{
+                        io.to(socket.id).emit('serverToClient', `You are not authorized to join this room`)
+                    }
                 }else{
-                    socket.broadcast.emit('serverToClient', `Message from ${socket.id}: ${message}`)
+                    io.to(socket.id).emit('serverToClient', `Error You Need To Include Valid Id And Room`)
                 }
             })
         })
