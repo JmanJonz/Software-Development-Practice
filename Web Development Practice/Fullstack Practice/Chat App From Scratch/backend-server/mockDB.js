@@ -17,7 +17,6 @@ const mockDB = {
     ],
     userCanEnterRoom: function(id, room){
         if(mockDB.users.includes(parseInt(id)) && mockDB.rooms.includes(room)){
-                                        console.log('user exists and room exists')
             if(mockDB.roomsUsers[room].includes(parseInt(id))){
                 // the room exists and they can join it
                     return true
