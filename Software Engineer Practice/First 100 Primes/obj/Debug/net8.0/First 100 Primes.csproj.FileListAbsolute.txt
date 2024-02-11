@@ -1,0 +1,15 @@
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\bin\Debug\net8.0\First 100 Primes.exe
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\bin\Debug\net8.0\First 100 Primes.deps.json
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\bin\Debug\net8.0\First 100 Primes.runtimeconfig.json
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\bin\Debug\net8.0\First 100 Primes.dll
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\bin\Debug\net8.0\First 100 Primes.pdb
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\First 100 Primes.GeneratedMSBuildEditorConfig.editorconfig
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\First 100 Primes.AssemblyInfoInputs.cache
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\First 100 Primes.AssemblyInfo.cs
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\First 100 Primes.csproj.CoreCompileInputs.cache
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\First 100 Primes.sourcelink.json
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\First 100 Primes.dll
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\refint\First 100 Primes.dll
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\First 100 Primes.pdb
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\First 100 Primes.genruntimeconfig.cache
+C:\Windows Drive\Local Repositories\Software Development Practice\Software Engineer Practice\First 100 Primes\obj\Debug\net8.0\ref\First 100 Primes.dll
