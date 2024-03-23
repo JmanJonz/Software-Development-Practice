@@ -15,7 +15,8 @@ home.addEventListener("click", ()=>{
                 try{
                     // don't forget to await naviagor.service worker it's async
                     const registration = await navigator.serviceWorker
-                        .register("./ServiceWorker.js")
+                        // .register("./ServiceWorker.js")
+                        .register("./ServiceWorkerCacheSite.js")
                                             console.log(`Service Worker Registered`, registration);
                 }catch(error){
                     console.error("Service worker registration failed", error);
